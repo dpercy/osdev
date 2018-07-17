@@ -45,7 +45,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
 
     # https://littleosbook.github.io/#quick-setup
-    sudo apt-get install build-essential nasm genisoimage bochs bochs-sdl
+    sudo apt-get update
+    sudo apt-get install -y build-essential nasm genisoimage bochs bochs-sdl
 
   SHELL
 end
