@@ -39,13 +39,6 @@ _Static_assert(offsetof(struct framebuffer_cell, paint) == 1, "offsetof paint");
 extern volatile struct framebuffer_cell framebuffer[25][80];
 
 
-int plus(int x, int y) {
-    // TODO just for fun, can I set a breakpoint in this function?
-    //  Even I can get the function's address from the ELF file,
-    //  all its call sites could be inlined...
-    return x + y;
-}
-
 int kmain() {
     struct framebuffer_paint paint = { .bg = Black, .fg = LightGray };
 
@@ -53,6 +46,6 @@ int kmain() {
     framebuffer[0][1] = (struct framebuffer_cell){ .paint = paint, .ascii = 'i' };
     framebuffer[0][2] = (struct framebuffer_cell){ .paint = paint, .ascii = '!' };
 
-    return *(int*)framebuffer;
+    return 0;
 }
 
