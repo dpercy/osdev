@@ -46,7 +46,10 @@ Vagrant.configure("2") do |config|
 
     # https://littleosbook.github.io/#quick-setup
     sudo apt-get update
-    sudo apt-get install -y build-essential nasm genisoimage bochs bochs-sdl
+    # Don't run bochs inside Vagrant - it's slow and broken
+    # https://github.com/mgadda/littleos/blob/master/README.md
+    sudo apt-get install -y build-essential nasm genisoimage ## bochs bochs-sdl
+    # Instead run bochs on the host.
 
   SHELL
 end

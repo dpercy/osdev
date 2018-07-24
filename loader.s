@@ -1,4 +1,5 @@
 global loader                   ; the entry symbol for ELF
+extern kmain
 
 MAGIC_NUMBER equ 0x1BADB002     ; define the magic number constant
 FLAGS        equ 0x0            ; multiboot flags
@@ -12,6 +13,17 @@ align 4                         ; the code must be 4 byte aligned
     dd CHECKSUM                 ; and the checksum
 
 loader:                         ; the loader label (defined as entry point in linker script)
-    mov eax, 0xCAFEBABE         ; place the number 0xCAFEBABE in the register eax
+    call kmain
+
 .loop:
     jmp .loop                   ; loop forever
+
+
+
+; allocate some uninitialized space for the C stack
+KERNEL_STACK_SIZE equ 4096
+
+section .bss
+align 4
+kernel_stack:
+    resb KERNEL_STACK_SIZE

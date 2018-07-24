@@ -1,1 +1,6 @@
 /.vagrant
+/iso/
+/kernel.elf
+/loader.o
+/os.iso
+/stage2_eltorito
