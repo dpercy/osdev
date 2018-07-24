@@ -31,10 +31,20 @@ _Static_assert(sizeof(struct framebuffer_cell) == 2, "sizeof framebuffer_cell");
 _Static_assert(offsetof(struct framebuffer_cell, ascii) == 0, "offsetof ascii");
 _Static_assert(offsetof(struct framebuffer_cell, paint) == 1, "offsetof paint");
 
-// TODO would make more sense for this to be "extern",
-//   but how do you define it? nasm section? loader section? (bss?)
-////extern volatile struct framebuffer_cell framebuffer[25][80];
-volatile struct framebuffer_cell (*framebuffer)[80] = (void*)0x000b8000;
+// The framebuffer is almost like a global variable that the CPU defines,
+// instead of the C compiler.
+// So we can define it "extern", and set its address in the linker script.
+// Also it has to be volatile so that the C compiler knows that
+// it can't assume apparently-unused writes are really unused.
+extern volatile struct framebuffer_cell framebuffer[25][80];
+
+
+int plus(int x, int y) {
+    // TODO just for fun, can I set a breakpoint in this function?
+    //  Even I can get the function's address from the ELF file,
+    //  all its call sites could be inlined...
+    return x + y;
+}
 
 int kmain() {
     struct framebuffer_paint paint = { .bg = Black, .fg = LightGray };
