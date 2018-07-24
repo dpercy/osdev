@@ -27,3 +27,4 @@ section .bss
 align 4
 kernel_stack:
     resb KERNEL_STACK_SIZE
+
